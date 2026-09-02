@@ -1,3 +1,7 @@
+const num1 = document.querySelector(''); // to be selected later
+const num2 = document.querySelector(''); // to be selected later
+const operator = document.querySelector(''); // to be selected later
+
 function add(num1, num2) {
 	return num1 + num2;
 }
