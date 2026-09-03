@@ -1,6 +1,33 @@
-const num1 = document.querySelector(''); // to be selected later
-const num2 = document.querySelector(''); // to be selected later
-const operator = document.querySelector(''); // to be selected later
+const buttons = Array.from(document.querySelectorAll('button'));
+
+let inputField = document.querySelector('.input-field');
+let resultField = document.querySelector('.result-field');
+
+let num1;
+let num2;
+let operator;
+
+// test zone
+
+buttons.map((element) =>
+	element.addEventListener('click', () => {
+		if (element.classList.contains('btn-number')) {
+			inputField.textContent += element.textContent;
+			resultField.textContent = inputField.textContent;
+		}
+
+		if (element.classList.contains('btn-operator')) {
+			if (inputField.textContent === '') {
+				num1 = 0;
+			} else {
+				num1 = Number(inputField.textContent);
+				inputField.textContent += ` ${element.textContent} `;
+			}
+		}
+	}),
+);
+
+// end test zone
 
 function add(num1, num2) {
 	return num1 + num2;
