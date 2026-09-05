@@ -16,8 +16,9 @@ buttons.map((element) => {
 		}
 
 		if (
-			element.classList.contains('btn-operator') &&
-			!element.classList.contains('btn-equals')
+			!inputField.textContent.includes(' ') &&
+			!element.classList.contains('btn-equals') &&
+			element.classList.contains('btn-operator')
 		) {
 			inputField.textContent += ` ${element.textContent} `;
 		}
