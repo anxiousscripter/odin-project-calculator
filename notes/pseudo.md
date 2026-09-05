@@ -50,7 +50,4 @@
 - a button pressed with it's corresponding number
 - a number: the number that was pressed
   _Steps_
-- when a button is clicked, update the first number variable and show it on the screen
-- if an operator button is clicked, change the background color of the operator button that was clicked
-- if the next button pressed is also an operator button, delete the previous one clicked and highlight the new one clicked
-- if the next button clicked is a number button, update the second number variable and show it on the screen
+- ...

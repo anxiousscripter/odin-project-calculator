@@ -9,24 +9,35 @@ let operator;
 
 // test zone
 
-buttons.map((element) =>
+buttons.map((element) => {
 	element.addEventListener('click', () => {
 		if (element.classList.contains('btn-number')) {
 			inputField.textContent += element.textContent;
-			resultField.textContent = inputField.textContent;
 		}
 
-		if (element.classList.contains('btn-operator')) {
-			if (inputField.textContent === '') {
-				num1 = 0;
-			} else {
-				num1 = Number(inputField.textContent);
-				inputField.textContent += ` ${element.textContent} `;
-			}
+		if (
+			element.classList.contains('btn-operator') &&
+			!element.classList.contains('btn-equals')
+		) {
+			inputField.textContent += ` ${element.textContent} `;
 		}
-	}),
-);
 
+		if (element.classList.contains('btn-equals')) {
+			const splitInput = inputField.textContent.split(' ');
+			num1 = Number(splitInput[0]);
+			operator = splitInput[1];
+			num2 = Number(splitInput[2]);
+			resultField.textContent += operate(num1, operator, num2);
+		}
+
+		if (element.classList.contains('btn-clear')) {
+			num1 = 0;
+			num2 = 0;
+			inputField.textContent = '';
+			resultField.textContent = '';
+		}
+	});
+});
 // end test zone
 
 function add(num1, num2) {
@@ -45,13 +56,13 @@ function divide(num1, num2) {
 	return num1 / num2;
 }
 
-function operate(num1, operand, num2) {
-	switch (operand) {
+function operate(num1, operator, num2) {
+	switch (operator) {
 		case '+':
 			return add(num1, num2);
 		case '-':
 			return subtract(num1, num2);
-		case '*':
+		case 'x':
 			return multiply(num1, num2);
 		case '/':
 			return divide(num1, num2);
