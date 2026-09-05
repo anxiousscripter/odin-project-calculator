@@ -8,6 +8,7 @@ let num2;
 let operator;
 
 // test zone
+// end test zone
 
 buttons.map((element) => {
 	element.addEventListener('click', () => {
@@ -15,6 +16,7 @@ buttons.map((element) => {
 		if (element.classList.contains('btn-number')) {
 			// display that number
 			inputField.textContent += element.textContent;
+			resultField.textContent = '';
 		}
 
 		// if the button clicked is an operator, is not the equals sign, and there is no other operator present
@@ -41,11 +43,19 @@ buttons.map((element) => {
 			num1 = Number(splitInput[0]);
 			operator = splitInput[1];
 			num2 = Number(splitInput[2]);
-			// call the operate function and display whatever it returns in the result field
-			resultField.textContent = operate(num1, operator, num2);
-			// update the input field to display the result of the previous calculation as num1
-			// and to use the operator selected as the operator for the next calculation
-			inputField.textContent = `${resultField.textContent} ${element.textContent} `;
+			// if the operator is divide and if the denominator is 0
+			if (operator === '/' && num2 === 0) {
+				resultField.textContent = 'Really dude?';
+				num1 = 0;
+				num2 = 0;
+				inputField.textContent = '';
+			} else {
+				// call the operate function and display whatever it returns in the result field
+				resultField.textContent = operate(num1, operator, num2);
+				// update the input field to display the result of the previous calculation as num1
+				// and to use the operator selected as the operator for the next calculation
+				inputField.textContent = `${resultField.textContent} ${element.textContent} `;
+			}
 		}
 
 		// if the button clicked is the equals sign
@@ -54,7 +64,15 @@ buttons.map((element) => {
 			num1 = Number(splitInput[0]);
 			operator = splitInput[1];
 			num2 = Number(splitInput[2]);
-			resultField.textContent = operate(num1, operator, num2);
+			// if the operator is divide and if the denominator is 0
+			if (operator === '/' && num2 === 0) {
+				resultField.textContent = 'Really dude? 🤨';
+				num1 = 0;
+				num2 = 0;
+				inputField.textContent = '';
+			} else {
+				resultField.textContent = operate(num1, operator, num2);
+			}
 		}
 
 		// if the button clicked is the clear button
@@ -66,7 +84,6 @@ buttons.map((element) => {
 		}
 	});
 });
-// end test zone
 
 function add(num1, num2) {
 	return num1 + num2;
