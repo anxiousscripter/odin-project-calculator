@@ -77,10 +77,7 @@ buttons.map((element) => {
 
 		// if the button clicked is the clear button
 		if (element.classList.contains('btn-clear')) {
-			num1 = 0;
-			num2 = 0;
-			inputField.textContent = '';
-			resultField.textContent = '';
+			clearDisplay();
 		}
 	});
 });
@@ -112,4 +109,11 @@ function operate(num1, operator, num2) {
 		case '/':
 			return divide(num1, num2);
 	}
+}
+
+function clearDisplay() {
+	num1 = 0;
+	num2 = 0;
+	inputField.textContent = '';
+	resultField.textContent = '';
 }
