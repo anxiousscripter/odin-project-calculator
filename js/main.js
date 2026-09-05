@@ -37,12 +37,7 @@ buttons.map((element) => {
 			!element.classList.contains('btn-equals') &&
 			element.classList.contains('btn-operator')
 		) {
-			// get whatever is being displayed and split it into num1, the operator, and num2
-			const splitInput = inputField.textContent.split(' ');
-			// convert num1 and num2 to numbers and assign each value to its respective variable
-			num1 = Number(splitInput[0]);
-			operator = splitInput[1];
-			num2 = Number(splitInput[2]);
+			convertValues();
 			// if the operator is divide and if the denominator is 0
 			if (operator === '/' && num2 === 0) {
 				resultField.textContent = 'Really dude?';
@@ -60,10 +55,7 @@ buttons.map((element) => {
 
 		// if the button clicked is the equals sign
 		if (element.classList.contains('btn-equals')) {
-			const splitInput = inputField.textContent.split(' ');
-			num1 = Number(splitInput[0]);
-			operator = splitInput[1];
-			num2 = Number(splitInput[2]);
+			convertValues();
 			// if the operator is divide and if the denominator is 0
 			if (operator === '/' && num2 === 0) {
 				resultField.textContent = 'Really dude? 🤨';
@@ -109,6 +101,15 @@ function operate(num1, operator, num2) {
 		case '/':
 			return divide(num1, num2);
 	}
+}
+
+function convertValues() {
+	// get whatever is being displayed and split it into num1, the operator, and num2
+	const splitInput = inputField.textContent.split(' ');
+	// convert num1 and num2 to numbers and assign each value to its respective variable
+	num1 = Number(splitInput[0]);
+	operator = splitInput[1];
+	num2 = Number(splitInput[2]);
 }
 
 function clearDisplay() {
