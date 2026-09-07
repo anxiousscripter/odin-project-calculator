@@ -16,7 +16,7 @@ buttons.map((element) => {
 		if (element.classList.contains('btn-number')) {
 			// display that number
 			inputField.textContent += element.textContent;
-			resultField.textContent = '';
+			// resultField.textContent = '';
 		}
 
 		// if the button clicked is an operator, is not the equals sign, and there is no other operator present
@@ -39,11 +39,11 @@ buttons.map((element) => {
 		) {
 			convertValues();
 			// if the operator is divide and if the denominator is 0
-			if (operator === '/' && num2 === 0) {
-				resultField.textContent = 'Really dude?';
+			if (isDividingByZero()) {
 				num1 = 0;
 				num2 = 0;
 				inputField.textContent = '';
+				resultField.textContent = 'Really dude? 🤨';
 			} else {
 				// call the operate function and display whatever it returns in the result field
 				resultField.textContent = operate(num1, operator, num2);
@@ -57,11 +57,11 @@ buttons.map((element) => {
 		if (element.classList.contains('btn-equals')) {
 			convertValues();
 			// if the operator is divide and if the denominator is 0
-			if (operator === '/' && num2 === 0) {
-				resultField.textContent = 'Really dude? 🤨';
+			if (isDividingByZero()) {
 				num1 = 0;
 				num2 = 0;
 				inputField.textContent = '';
+				resultField.textContent = 'Really dude? 🤨';
 			} else {
 				resultField.textContent = operate(num1, operator, num2);
 			}
@@ -101,6 +101,10 @@ function operate(num1, operator, num2) {
 		case '/':
 			return divide(num1, num2);
 	}
+}
+
+function isDividingByZero() {
+	return operator === '/' && num2 === 0;
 }
 
 function convertValues() {
