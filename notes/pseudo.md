@@ -51,3 +51,60 @@
 - a number: the number that was pressed
   _Steps_
 - ...
+
+### Problem 7: Single Pair Evaluation
+
+- evaluate a single pair of numbers at a time
+- two numbers and an operator
+- a number: the result, and an operator if another is added to the expression
+  _Steps_
+
+### Problem 8: Rounding Long Decimals
+
+### Problem 9: Evaluation Before All Input Is Provided
+
+- prevent any calculations before all input is provided
+- two numbers and an operator
+- nothing if any part of the expression is missing. a number: the result if all input is provided
+  _Steps_
+
+### Problem 10: Clearing Display
+
+- wipe out any existing data when the clear button is pressed
+- a button: the clear button
+- any empty input field, an empty result field, no values for the first number, second number, and operator
+  _Steps_
+- check whether the clear button has been pressed
+  if it has...
+- delete whatever is currently in the input field
+- delete whatever is currently result field
+- set the first number to 0
+- set the second number to 0
+- set the operator to nothing
+
+### Problem 11: Prevent Divide By Zero
+
+- display a snarky error message when the user tries to divide by zero
+- the divide operator, zero
+- a snarky error message
+  _Steps_
+
+### Problem 12: Replace Operators In Succession
+
+- if an operator pressed is immediately followed by another operator, replace the first one with the most recently pressed one
+- two operators: the first one pressed and the second one pressed
+- an operator: the second or most recent one pressed
+  _Steps_
+
+### Problem 13: Clear Screen On New Digit Input
+
+- clear the screen if a number is pressed and is not preceeded by an operator or an already evaluated expression
+- a number
+- that number displayed on the screen
+  _Steps_
+- check if the screen input field is empty
+- if it is, display the number on screen
+  if it is not...
+- check if the last value in the input field is an operator
+- if it is, append the number to the input field to make a new expression
+- if it is not, clear both the input field and result field and display that number in the input field

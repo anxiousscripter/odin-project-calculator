@@ -1,124 +1,134 @@
-const buttons = Array.from(document.querySelectorAll('button'));
+const btnNumbers = Array.from(document.querySelectorAll('.btn-number'));
+const btnOperators = Array.from(document.querySelectorAll('.btn-operator'));
 
-let inputField = document.querySelector('.input-field');
-let resultField = document.querySelector('.result-field');
+const input = document.querySelector('.input-field');
+const result = document.querySelector('.result-field');
+const btnClear = document.querySelector('.btn-clear');
 
-let num1;
-let num2;
+const divideByZeroError = 'Really dude? 🤨';
+
+let value1;
+let value2;
 let operator;
 
-// test zone
-// end test zone
+function calculator() {
+	btnNumbers.map((button) =>
+		button.addEventListener('click', () => {
+			// append a number to the input field
+			input.textContent += button.textContent;
+		}),
+	);
 
-buttons.map((element) => {
-	element.addEventListener('click', () => {
-		// if the button clicked is a number
-		if (element.classList.contains('btn-number')) {
-			// display that number
-			inputField.textContent += element.textContent;
-			// resultField.textContent = '';
-		}
+	btnOperators.map((button) =>
+		button.addEventListener('click', () => {
+			// append an operator if...
+			// input has atleast a number,
+			// input does not end with an operator,
+			// and input has no operator present
+			if (
+				!button.classList.contains('btn-equals') &&
+				input.textContent !== '' &&
+				!input.textContent.endsWith(' ') &&
+				!input.textContent.includes(' ')
+			) {
+				// append operator to the input field
+				input.textContent += ` ${button.textContent} `;
 
-		// if the button clicked is an operator, is not the equals sign, and there is no other operator present
-		if (
-			!inputField.textContent.includes(' ') &&
-			!element.classList.contains('btn-equals') &&
-			element.classList.contains('btn-operator')
-		) {
-			// if the input field is not empty
-			if (inputField.textContent !== '') {
-				// display that operator next to whatever is already in the display
-				inputField.textContent += ` ${element.textContent} `;
+				// but, if input has atleast a number,
+				// and input already has an operator present,
+				// evaluate current expression, append new operator next to result
+			} else if (
+				!button.classList.contains('btn-equals') &&
+				input.textContent !== '' &&
+				input.textContent.includes(' ') &&
+				!input.textContent.endsWith(' ')
+			) {
+				convertValues();
+				if (isDividingByZero()) {
+					value1 = 0;
+					value2 = 0;
+					input.textContent = divideByZeroError;
+					result.textContent = '';
+				} else {
+					result.textContent = operate(value1, operator, value2);
+					input.textContent = `${result.textContent} ${button.textContent} `;
+				}
 			}
 
-			// however, if there already is an operator present and the other two conditions are met
-		} else if (
-			inputField.textContent.includes(' ') &&
-			!element.classList.contains('btn-equals') &&
-			element.classList.contains('btn-operator')
-		) {
-			convertValues();
-			// if the operator is divide and if the denominator is 0
-			if (isDividingByZero()) {
-				num1 = 0;
-				num2 = 0;
-				inputField.textContent = '';
-				resultField.textContent = 'Really dude? 🤨';
-			} else {
-				// call the operate function and display whatever it returns in the result field
-				resultField.textContent = operate(num1, operator, num2);
-				// update the input field to display the result of the previous calculation as num1
-				// and to use the operator selected as the operator for the next calculation
-				inputField.textContent = `${resultField.textContent} ${element.textContent} `;
+			if (button.classList.contains('btn-equals')) {
+				// only calculate if all inputs are provided
+				if (
+					input.textContent !== '' &&
+					input.textContent.includes(' ') &&
+					!input.textContent.endsWith(' ')
+				) {
+					convertValues();
+					if (isDividingByZero()) {
+						value1 = 0;
+						value2 = 0;
+						input.textContent = divideByZeroError;
+						result.textContent = '';
+					} else {
+						input.textContent = operate(value1, operator, value2);
+						result.textContent = '';
+					}
+				}
 			}
-		}
+		}),
+	);
 
-		// if the button clicked is the equals sign
-		if (element.classList.contains('btn-equals')) {
-			convertValues();
-			// if the operator is divide and if the denominator is 0
-			if (isDividingByZero()) {
-				num1 = 0;
-				num2 = 0;
-				inputField.textContent = '';
-				resultField.textContent = 'Really dude? 🤨';
-			} else {
-				resultField.textContent = operate(num1, operator, num2);
-			}
-		}
-
-		// if the button clicked is the clear button
-		if (element.classList.contains('btn-clear')) {
-			clearDisplay();
-		}
+	btnClear.addEventListener('click', () => {
+		clearDisplay();
 	});
-});
-
-function add(num1, num2) {
-	return num1 + num2;
 }
 
-function subtract(num1, num2) {
-	return num1 - num2;
-}
-
-function multiply(num1, num2) {
-	return num1 * num2;
-}
-
-function divide(num1, num2) {
-	return num1 / num2;
-}
-
-function operate(num1, operator, num2) {
-	switch (operator) {
-		case '+':
-			return add(num1, num2);
-		case '-':
-			return subtract(num1, num2);
-		case 'x':
-			return multiply(num1, num2);
-		case '/':
-			return divide(num1, num2);
-	}
-}
-
-function isDividingByZero() {
-	return operator === '/' && num2 === 0;
+function add(value1, value2) {
+	return value1 + value2;
 }
 
 function convertValues() {
-	// get whatever is being displayed and split it into num1, the operator, and num2
-	const splitInput = inputField.textContent.split(' ');
-	// convert num1 and num2 to numbers and assign each value to its respective variable
-	num1 = Number(splitInput[0]);
+	// get whatever is being displayed and split it into value1, the operator, and value2
+	const splitInput = input.textContent.split(' ');
+	// convert value1 and value2 to numbers and assign each value to its respective variable
+	value1 = Number(splitInput[0]);
 	operator = splitInput[1];
-	num2 = Number(splitInput[2]);
+	value2 = Number(splitInput[2]);
+}
+
+function isDividingByZero() {
+	return operator === '/' && value2 === 0;
+}
+
+function subtract(value1, value2) {
+	return value1 - value2;
+}
+
+function multiply(value1, value2) {
+	return value1 * value2;
+}
+
+function divide(value1, value2) {
+	return value1 / value2;
+}
+
+function operate(value1, operator, value2) {
+	switch (operator) {
+		case '+':
+			return add(value1, value2);
+		case '-':
+			return subtract(value1, value2);
+		case 'x':
+			return multiply(value1, value2);
+		case '/':
+			return divide(value1, value2);
+	}
 }
 
 function clearDisplay() {
-	num1 = 0;
-	num2 = 0;
-	inputField.textContent = '';
-	resultField.textContent = '';
+	value1 = 0;
+	value2 = 0;
+	input.textContent = '';
+	result.textContent = '';
 }
+
+calculator();
