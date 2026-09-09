@@ -37,9 +37,9 @@ function calculator() {
 				// append operator to the input field
 				input.textContent += ` ${button.textContent} `;
 
-				// but, if input has atleast a number,
-				// and input already has an operator present,
-				// evaluate current expression, append new operator next to result
+				// but evaluate the current expression if...
+				// input already has value1, an operator, and value2
+				// and an operator is clicked instead of the equals,
 			} else if (
 				!button.classList.contains('btn-equals') &&
 				input.textContent !== '' &&
@@ -54,6 +54,7 @@ function calculator() {
 					result.textContent = '';
 				} else {
 					result.textContent = operate(value1, operator, value2);
+					// append new operator next to result
 					input.textContent = `${result.textContent} ${button.textContent} `;
 				}
 			}
@@ -137,10 +138,17 @@ function isDividingByZero() {
 }
 
 function deleteLastInput() {
-	input.textContent = input.textContent.substring(
-		0,
-		input.textContent.length - 1,
-	);
+	if (input.textContent.endsWith(' ')) {
+		input.textContent = input.textContent.substring(
+			0,
+			input.textContent.length - 3,
+		);
+	} else {
+		input.textContent = input.textContent.substring(
+			0,
+			input.textContent.length - 1,
+		);
+	}
 }
 
 function clearDisplay() {
