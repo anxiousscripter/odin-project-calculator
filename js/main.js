@@ -4,6 +4,7 @@ const btnOperators = Array.from(document.querySelectorAll('.btn-operator'));
 const input = document.querySelector('.input-field');
 const result = document.querySelector('.result-field');
 const btnClear = document.querySelector('.btn-clear');
+const btnBackspace = document.querySelector('.btn-backspace');
 
 const divideByZeroError = 'Really dude? 🤨';
 
@@ -12,6 +13,7 @@ let value2;
 let operator;
 
 function calculator() {
+	// if a number button is clicked
 	btnNumbers.map((button) =>
 		button.addEventListener('click', () => {
 			// append a number to the input field
@@ -19,6 +21,7 @@ function calculator() {
 		}),
 	);
 
+	// if an operator button is clicked
 	btnOperators.map((button) =>
 		button.addEventListener('click', () => {
 			// append an operator if...
@@ -55,6 +58,7 @@ function calculator() {
 				}
 			}
 
+			// if the equals button is clicked
 			if (button.classList.contains('btn-equals')) {
 				// only calculate if all inputs are provided
 				if (
@@ -77,6 +81,14 @@ function calculator() {
 		}),
 	);
 
+	// if the backspace button is clicked
+	btnBackspace.addEventListener('click', () => {
+		if (input.textContent !== '') {
+			deleteLastInput();
+		}
+	});
+
+	// if the clear all (AC) button is clicked
 	btnClear.addEventListener('click', () => {
 		clearDisplay();
 	});
@@ -84,19 +96,6 @@ function calculator() {
 
 function add(value1, value2) {
 	return value1 + value2;
-}
-
-function convertValues() {
-	// get whatever is being displayed and split it into value1, the operator, and value2
-	const splitInput = input.textContent.split(' ');
-	// convert value1 and value2 to numbers and assign each value to its respective variable
-	value1 = Number(splitInput[0]);
-	operator = splitInput[1];
-	value2 = Number(splitInput[2]);
-}
-
-function isDividingByZero() {
-	return operator === '/' && value2 === 0;
 }
 
 function subtract(value1, value2) {
@@ -122,6 +121,26 @@ function operate(value1, operator, value2) {
 		case '/':
 			return divide(value1, value2);
 	}
+}
+
+function convertValues() {
+	// get whatever is being displayed and split it into value1, the operator, and value2
+	const splitInput = input.textContent.split(' ');
+	// convert value1 and value2 to numbers and assign each value to its respective variable
+	value1 = Number(splitInput[0]);
+	operator = splitInput[1];
+	value2 = Number(splitInput[2]);
+}
+
+function isDividingByZero() {
+	return operator === '/' && value2 === 0;
+}
+
+function deleteLastInput() {
+	input.textContent = input.textContent.substring(
+		0,
+		input.textContent.length - 1,
+	);
 }
 
 function clearDisplay() {
