@@ -16,8 +16,16 @@ function calculator() {
 	// if a number button is clicked
 	btnNumbers.map((button) =>
 		button.addEventListener('click', () => {
-			// append a number to the input field
-			input.textContent += button.textContent;
+			// if the result field is not empty
+			// and the input field ends with a number
+			// clear the screen and append the new number to input
+			if (!input.textContent.endsWith(' ') && result.textContent !== '') {
+				clearDisplay();
+				input.textContent += button.textContent;
+			} else {
+				// append a number to the input field
+				input.textContent += button.textContent;
+			}
 		}),
 	);
 
@@ -74,8 +82,8 @@ function calculator() {
 						input.textContent = divideByZeroError;
 						result.textContent = '';
 					} else {
-						input.textContent = operate(value1, operator, value2);
-						result.textContent = '';
+						// input.textContent = operate(value1, operator, value2);
+						result.textContent = operate(value1, operator, value2);
 					}
 				}
 			}
