@@ -116,7 +116,8 @@ function multiply(value1, value2) {
 }
 
 function divide(value1, value2) {
-	return value1 / value2;
+	// round to a max of 4 decimals
+	return Number((value1 / value2).toFixed(4));
 }
 
 function operate(value1, operator, value2) {
